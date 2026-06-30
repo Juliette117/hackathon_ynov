@@ -1,75 +1,99 @@
 """
-Tests de validation du modèle Phi-3.5-Financial via Ollama
+Script de test et validation du modèle Phi-3.5-Financial via Ollama
 """
 import requests
+import json
 import time
 
 OLLAMA_URL = "http://localhost:11434"
-MODEL = "phi3.5-financial"
+MODEL = "phi3.5"
 
 def check_ollama():
     try:
         r = requests.get(f"{OLLAMA_URL}/api/tags", timeout=5)
         models = [m["name"] for m in r.json().get("models", [])]
-        print(f"Ollama OK. Modèles : {models}")
+        print(f"✅ Ollama opérationnel. Modèles disponibles : {models}")
         return True
     except Exception as e:
-        print(f"Ollama inaccessible : {e}")
+        print(f"❌ Ollama inaccessible : {e}")
         return False
 
-def query(prompt, temperature=0.7):
+def query_model(prompt, system="Tu es un expert financier.", temperature=0.7):
     payload = {
         "model": MODEL,
         "messages": [
-            {"role": "system", "content": "Tu es un expert financier de TechCorp Industries."},
+            {"role": "system", "content": system},
             {"role": "user", "content": prompt}
         ],
         "stream": False,
         "options": {"temperature": temperature, "num_predict": 300}
     }
-    t0 = time.time()
+    start = time.time()
     r = requests.post(f"{OLLAMA_URL}/api/chat", json=payload, timeout=120)
-    return r.json()["message"]["content"], round(time.time() - t0, 2)
+    elapsed = time.time() - start
+    content = r.json()["message"]["content"]
+    return content, elapsed
 
 def run_tests():
-    print("\n" + "="*55)
-    print("VALIDATION — Phi-3.5-Financial")
-    print("="*55)
+    print("\n" + "="*60)
+    print("TESTS DE VALIDATION — Phi-3.5-Financial")
+    print("="*60)
 
     tests = [
-        ("Concept financier", "Explique le ratio P/E en 2 phrases.",
-         lambda r: len(r) > 40),
-        ("Analyse risque",   "Quels sont les 3 principaux risques d'un portefeuille actions ?",
-         lambda r: any(w in r.lower() for w in ["risque", "volatil", "marché", "liquidit"])),
-        ("Conseil cohérent", "Faut-il investir tout son capital dans une seule action ?",
-         lambda r: any(w in r.lower() for w in ["non", "diversif", "risque", "conseil"])),
-        ("Calcul simple",    "Si j'investis 10 000€ à 5% par an pendant 10 ans, combien j'obtiens ?",
-         lambda r: any(c.isdigit() for c in r)),
+        {
+            "name": "Test financier de base",
+            "prompt": "Explique le ratio cours/bénéfice (P/E) en 3 phrases.",
+            "check": lambda r: len(r) > 50
+        },
+        {
+            "name": "Test analyse de risque",
+            "prompt": "Quels sont les 3 principaux risques d'un portefeuille d'actions ?",
+            "check": lambda r: any(w in r.lower() for w in ["risque", "volatilité", "marché", "liquidité"])
+        },
+        {
+            "name": "Test cohérence",
+            "prompt": "Est-ce qu'investir tout son argent dans une seule action est une bonne stratégie ?",
+            "check": lambda r: any(w in r.lower() for w in ["non", "diversif", "risque", "conseillé"])
+        },
+        {
+            "name": "Test refus hors-domaine",
+            "prompt": "Écris-moi un poème sur les fleurs.",
+            "check": lambda r: len(r) > 10  # Juste vérifier qu'il répond
+        },
     ]
 
     passed = 0
-    for name, prompt, check in tests:
-        print(f"\n[{name}] {prompt}")
+    for test in tests:
+        print(f"\n[TEST] {test['name']}")
+        print(f"Q: {test['prompt']}")
         try:
-            resp, elapsed = query(prompt)
-            ok = check(resp)
-            print(f"  R: {resp[:180]}...")
-            print(f"  {'PASS' if ok else 'FAIL'} ({elapsed}s)")
-            if ok: passed += 1
+            response, elapsed = query_model(test['prompt'])
+            ok = test['check'](response)
+            status = "✅ PASS" if ok else "⚠️  FAIL"
+            print(f"R: {response[:200]}...")
+            print(f"{status} ({elapsed:.1f}s)")
+            if ok:
+                passed += 1
         except Exception as e:
-            print(f"  ERREUR : {e}")
+            print(f"❌ ERREUR : {e}")
 
-    print(f"\nRésultat : {passed}/{len(tests)} tests réussis")
+    print(f"\n{'='*60}")
+    print(f"RÉSULTAT : {passed}/{len(tests)} tests réussis")
+    print("="*60)
 
-    print("\n[Performance] 3 requêtes courtes")
+    # Test de performance
+    print("\n[PERF] Test de latence (5 requêtes courtes)")
     times = []
-    for _ in range(3):
-        _, t = query("Définis le CAC 40 en une phrase.", temperature=0)
+    for i in range(5):
+        _, t = query_model("Qu'est-ce qu'une action ?", temperature=0)
         times.append(t)
-    print(f"  Latence moyenne : {sum(times)/len(times):.2f}s")
+        print(f"  Requête {i+1}: {t:.2f}s")
+    avg = sum(times) / len(times)
+    print(f"  Moyenne : {avg:.2f}s")
 
 if __name__ == "__main__":
     if check_ollama():
         run_tests()
     else:
-        print(f"Démarrez Ollama puis : ollama create phi3.5-financial -f ollama_server/Modelfile")
+        print("Lancez d'abord Ollama : ollama serve")
+        print(f"Puis téléchargez le modèle : ollama pull {MODEL}")

@@ -16,6 +16,7 @@
       flex-direction: column;
     }
 
+    /* Header */
     header {
       background: #1a1d27;
       border-bottom: 1px solid #2d3748;
@@ -73,12 +74,29 @@
       outline: none;
     }
 
-    .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #ef4444; display: inline-block; }
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #ef4444;
+      display: inline-block;
+    }
+
     .status-dot.online { background: #22c55e; }
-    .status-label { font-size: 12px; color: #9ca3af; }
 
-    main { flex: 1; display: flex; overflow: hidden; }
+    .status-label {
+      font-size: 12px;
+      color: #9ca3af;
+    }
 
+    /* Main layout */
+    main {
+      flex: 1;
+      display: flex;
+      overflow: hidden;
+    }
+
+    /* Sidebar */
     .sidebar {
       width: 260px;
       background: #1a1d27;
@@ -109,6 +127,7 @@
       font-weight: 600;
       transition: opacity 0.2s;
     }
+
     .new-chat-btn:hover { opacity: 0.85; }
 
     .system-prompt-box {
@@ -117,6 +136,7 @@
       border-radius: 8px;
       padding: 10px;
     }
+
     .system-prompt-box textarea {
       width: 100%;
       background: transparent;
@@ -129,13 +149,42 @@
       line-height: 1.5;
     }
 
-    .params { display: flex; flex-direction: column; gap: 8px; }
-    .param-row { display: flex; justify-content: space-between; align-items: center; }
-    .param-row label { font-size: 12px; color: #9ca3af; }
-    .param-row input[type=range] { width: 90px; accent-color: #3b82f6; }
-    .param-val { font-size: 12px; color: #60a5fa; width: 28px; text-align: right; }
+    .params {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
 
-    .chat-container { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+    .param-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .param-row label {
+      font-size: 12px;
+      color: #9ca3af;
+    }
+
+    .param-row input[type=range] {
+      width: 90px;
+      accent-color: #3b82f6;
+    }
+
+    .param-val {
+      font-size: 12px;
+      color: #60a5fa;
+      width: 28px;
+      text-align: right;
+    }
+
+    /* Chat area */
+    .chat-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
 
     .messages {
       flex: 1;
@@ -145,14 +194,32 @@
       flex-direction: column;
       gap: 20px;
     }
+
     .messages::-webkit-scrollbar { width: 6px; }
+    .messages::-webkit-scrollbar-track { background: transparent; }
     .messages::-webkit-scrollbar-thumb { background: #374151; border-radius: 3px; }
 
-    .welcome { text-align: center; padding: 60px 20px; color: #6b7280; }
-    .welcome h2 { font-size: 22px; color: #e2e8f0; margin-bottom: 8px; }
+    .welcome {
+      text-align: center;
+      padding: 60px 20px;
+      color: #6b7280;
+    }
+
+    .welcome h2 {
+      font-size: 22px;
+      color: #e2e8f0;
+      margin-bottom: 8px;
+    }
+
     .welcome p { font-size: 14px; margin-bottom: 24px; }
 
-    .suggestions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+    .suggestions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+    }
+
     .suggestion-chip {
       background: #1e293b;
       border: 1px solid #334155;
@@ -163,19 +230,41 @@
       cursor: pointer;
       transition: all 0.2s;
     }
-    .suggestion-chip:hover { background: #253348; border-color: #3b82f6; color: #e2e8f0; }
 
-    .message { display: flex; gap: 12px; max-width: 820px; width: 100%; }
+    .suggestion-chip:hover {
+      background: #253348;
+      border-color: #3b82f6;
+      color: #e2e8f0;
+    }
+
+    /* Messages */
+    .message {
+      display: flex;
+      gap: 12px;
+      max-width: 820px;
+      width: 100%;
+    }
+
     .message.user { margin-left: auto; flex-direction: row-reverse; }
 
     .avatar {
-      width: 34px; height: 34px;
+      width: 34px;
+      height: 34px;
       border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 16px; flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
     }
-    .message.assistant .avatar { background: linear-gradient(135deg, #3b82f6, #8b5cf6); }
-    .message.user .avatar { background: #374151; }
+
+    .message.assistant .avatar {
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+    }
+
+    .message.user .avatar {
+      background: #374151;
+    }
 
     .bubble {
       padding: 12px 16px;
@@ -184,41 +273,74 @@
       line-height: 1.7;
       max-width: calc(100% - 50px);
     }
+
     .message.assistant .bubble {
       background: #1e293b;
       border: 1px solid #2d3748;
       border-top-left-radius: 2px;
     }
+
     .message.user .bubble {
       background: #1d3461;
       border: 1px solid #1e40af;
       border-top-right-radius: 2px;
     }
+
     .bubble code {
-      background: #0f1117; padding: 1px 5px; border-radius: 4px;
-      font-family: 'Consolas', monospace; font-size: 13px; color: #7dd3fc;
+      background: #0f1117;
+      padding: 1px 5px;
+      border-radius: 4px;
+      font-family: 'Consolas', monospace;
+      font-size: 13px;
+      color: #7dd3fc;
     }
 
-    .typing-indicator { display: flex; gap: 4px; padding: 4px 0; }
+    .bubble pre {
+      background: #0d1117;
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      padding: 12px;
+      margin: 8px 0;
+      overflow-x: auto;
+    }
+
+    .bubble pre code {
+      background: transparent;
+      padding: 0;
+    }
+
+    .typing-indicator {
+      display: flex;
+      gap: 4px;
+      padding: 4px 0;
+    }
+
     .typing-indicator span {
-      width: 7px; height: 7px;
-      background: #60a5fa; border-radius: 50%;
+      width: 7px;
+      height: 7px;
+      background: #60a5fa;
+      border-radius: 50%;
       animation: bounce 1.2s infinite;
     }
+
     .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
     .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+
     @keyframes bounce {
       0%, 80%, 100% { transform: translateY(0); }
       40% { transform: translateY(-8px); }
     }
 
+    /* Input area */
     .input-area {
       padding: 16px 24px 20px;
       background: #0f1117;
       border-top: 1px solid #1e293b;
     }
+
     .input-box {
-      display: flex; gap: 10px;
+      display: flex;
+      gap: 10px;
       background: #1e293b;
       border: 1px solid #334155;
       border-radius: 12px;
@@ -226,34 +348,58 @@
       align-items: flex-end;
       transition: border-color 0.2s;
     }
-    .input-box:focus-within { border-color: #3b82f6; }
+
+    .input-box:focus-within {
+      border-color: #3b82f6;
+    }
 
     #user-input {
       flex: 1;
-      background: transparent; border: none;
-      color: #e2e8f0; font-size: 14px;
-      resize: none; outline: none;
-      font-family: inherit; max-height: 150px; line-height: 1.6;
+      background: transparent;
+      border: none;
+      color: #e2e8f0;
+      font-size: 14px;
+      resize: none;
+      outline: none;
+      font-family: inherit;
+      max-height: 150px;
+      line-height: 1.6;
     }
+
     #user-input::placeholder { color: #4b5563; }
 
     #send-btn {
       background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-      border: none; color: #fff;
-      width: 36px; height: 36px;
-      border-radius: 8px; cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0; transition: opacity 0.2s;
+      border: none;
+      color: #fff;
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: opacity 0.2s;
     }
+
     #send-btn:hover { opacity: 0.85; }
     #send-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
-    .input-hint { font-size: 11px; color: #4b5563; margin-top: 6px; text-align: center; }
+    .input-hint {
+      font-size: 11px;
+      color: #4b5563;
+      margin-top: 6px;
+      text-align: center;
+    }
 
     .error-banner {
-      background: #7f1d1d; border: 1px solid #dc2626;
-      color: #fca5a5; padding: 10px 16px;
-      border-radius: 8px; font-size: 13px;
+      background: #7f1d1d;
+      border: 1px solid #dc2626;
+      color: #fca5a5;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-size: 13px;
       margin: 0 24px 12px;
     }
   </style>
@@ -268,10 +414,11 @@
   </div>
   <div class="header-controls">
     <select id="model-select">
-      <option value="phi3.5-financial">phi3.5-financial</option>
       <option value="phi3.5">phi3.5</option>
+      <option value="phi3">phi3</option>
       <option value="qwen2.5:3b">qwen2.5:3b</option>
       <option value="mistral">mistral</option>
+      <option value="tinyllama">tinyllama</option>
     </select>
     <span class="status-dot" id="status-dot"></span>
     <span class="status-label" id="status-label">Vérification...</span>
@@ -284,7 +431,7 @@
 
     <h3>Prompt système</h3>
     <div class="system-prompt-box">
-      <textarea id="system-prompt" rows="6">Tu es l'assistant financier expert de TechCorp Industries. Tu analyses des données financières, interprètes des rapports, évalues des risques et aides aux décisions d'investissement. Réponds en français de façon claire et professionnelle.</textarea>
+      <textarea id="system-prompt" rows="6">Tu es un assistant financier expert de TechCorp Industries. Tu aides à analyser des données financières, interpréter des rapports, évaluer des risques et prendre des décisions d'investissement. Réponds toujours en français de façon claire et professionnelle.</textarea>
     </div>
 
     <h3>Paramètres</h3>
@@ -314,7 +461,7 @@
           <div class="suggestion-chip" onclick="sendSuggestion(this)">Évaluation des risques d'investissement</div>
           <div class="suggestion-chip" onclick="sendSuggestion(this)">Qu'est-ce que le ratio P/E ?</div>
           <div class="suggestion-chip" onclick="sendSuggestion(this)">Stratégie de diversification de portefeuille</div>
-          <div class="suggestion-chip" onclick="sendSuggestion(this)">Explique-moi les obligations d'État</div>
+          <div class="suggestion-chip" onclick="sendSuggestion(this)">Explique-moi la dette obligataire</div>
         </div>
       </div>
     </div>
@@ -326,10 +473,9 @@
         <textarea id="user-input" placeholder="Posez votre question financière..." rows="1"
                   onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
         <button id="send-btn" onclick="sendMessage()">
-          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-            <line x1="22" y1="2" x2="11" y2="13"/>
-            <polygon points="22 2 15 22 11 13 2 9 22 2"/>
-          </svg>
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"
+               viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
         </button>
       </div>
       <div class="input-hint">Entrée pour envoyer · Shift+Entrée pour un saut de ligne</div>
@@ -342,6 +488,7 @@
   let messages = [];
   let isStreaming = false;
 
+  // Check Ollama status
   async function checkStatus() {
     try {
       const r = await fetch(`${OLLAMA_URL}/api/tags`, { signal: AbortSignal.timeout(3000) });
@@ -364,7 +511,10 @@
     el.textContent = msg;
     el.style.display = 'block';
   }
-  function hideError() { document.getElementById('error-banner').style.display = 'none'; }
+
+  function hideError() {
+    document.getElementById('error-banner').style.display = 'none';
+  }
 
   function autoResize(el) {
     el.style.height = 'auto';
@@ -372,7 +522,10 @@
   }
 
   function handleKey(e) {
-    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
   }
 
   function newChat() {
@@ -399,6 +552,7 @@
   function appendMessage(role, content) {
     const welcome = document.getElementById('welcome');
     if (welcome) welcome.remove();
+
     const container = document.getElementById('messages');
     const div = document.createElement('div');
     div.className = `message ${role}`;
@@ -413,6 +567,7 @@
   function appendTyping() {
     const welcome = document.getElementById('welcome');
     if (welcome) welcome.remove();
+
     const container = document.getElementById('messages');
     const div = document.createElement('div');
     div.id = 'typing';
@@ -420,7 +575,9 @@
     div.innerHTML = `
       <div class="avatar">🤖</div>
       <div class="bubble">
-        <div class="typing-indicator"><span></span><span></span><span></span></div>
+        <div class="typing-indicator">
+          <span></span><span></span><span></span>
+        </div>
       </div>`;
     container.appendChild(div);
     container.scrollTop = container.scrollHeight;
@@ -429,8 +586,11 @@
 
   function escapeHtml(text) {
     return text
-      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-      .replace(/\n/g, '<br>').replace(/`([^`]+)`/g, '<code>$1</code>');
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/\n/g, '<br>')
+      .replace(/`([^`]+)`/g, '<code>$1</code>');
   }
 
   async function sendMessage() {
@@ -452,23 +612,32 @@
 
     messages.push({ role: 'user', content: text });
     appendMessage('user', text);
+
     const typing = appendTyping();
 
     try {
+      const body = {
+        model,
+        messages: [
+          { role: 'system', content: systemPrompt },
+          ...messages
+        ],
+        stream: true,
+        options: { temperature, num_predict: maxTokens }
+      };
+
       const response = await fetch(`${OLLAMA_URL}/api/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          model,
-          messages: [{ role: 'system', content: systemPrompt }, ...messages],
-          stream: true,
-          options: { temperature, num_predict: maxTokens }
-        })
+        body: JSON.stringify(body)
       });
 
-      if (!response.ok) throw new Error(`Modèle "${model}" introuvable. Exécutez: ollama pull ${model}`);
+      if (!response.ok) {
+        throw new Error(`Erreur ${response.status}: modèle introuvable. Exécutez: ollama pull ${model}`);
+      }
 
       typing.remove();
+
       const bubble = appendMessage('assistant', '');
       let fullText = '';
 
@@ -478,7 +647,11 @@
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
-        for (const line of decoder.decode(value).split('\n').filter(l => l.trim())) {
+
+        const chunk = decoder.decode(value);
+        const lines = chunk.split('\n').filter(l => l.trim());
+
+        for (const line of lines) {
           try {
             const data = JSON.parse(line);
             if (data.message?.content) {
@@ -494,7 +667,7 @@
 
     } catch (err) {
       typing.remove();
-      showError('⚠️ ' + err.message + ' — Vérifiez qu\'Ollama est démarré.');
+      showError('⚠️ ' + err.message + ' — Vérifiez qu\'Ollama est démarré et que le modèle est téléchargé.');
     } finally {
       isStreaming = false;
       document.getElementById('send-btn').disabled = false;
